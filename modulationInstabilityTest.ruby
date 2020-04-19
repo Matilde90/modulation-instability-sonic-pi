@@ -29,10 +29,18 @@ for c in 0..column_in_amp do
 end
 puts array.inspect;
 
-# for i in 0..array.length
-#   chord = array[i]
-# for y in 0..chord.length
+for i in 1..array.length
+  chord = array[i- 1];
+  freq_to_play=[];
+  amp_to_play=[];
+  for y in 1..chord.length
+  freq_p=chord[y - 1][0];
+  amp_p=chord[y - 1][0];
+  freq_to_play.push(freq_p);
+  amp_to_play.push(amp_p);
+  end 
+puts freq_to_play.inspect;  
+#play freq_to_play.ring;
+end
 
-# end 
-# crea array of notes to play
-play array.ring[i];
+# 0,01 - 6
