@@ -1,6 +1,7 @@
 require 'csv'
-amp_table=CSV.parse(File.read("/Users/matildealiffi/Coding/music_sonic_pi/ampiezzeModulation.csv"), headers: false)
-freq_table=CSV.parse(File.read("/Users/matildealiffi/Coding/music_sonic_pi/freq.csv"), headers: false)
+local_dir="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-sonic-pi/"
+amp_table=CSV.parse(File.read(local_dir + "/ampiezzeModulation.csv"), headers: false)
+freq_table=CSV.parse(File.read(local_dir + "freq.csv"), headers: false)
 
 ##
 # Raw index is the time-index of the chord.
@@ -24,11 +25,5 @@ for i in 1..freq_array.size do
     end
   end
   
-  
   sleep 2;
-  for i in 1..freq_array.size do
-      play array.ring[i];
-      sleep 0.1
-    end;
-    
-    puts "Done!"
+  play array.ring[i];
