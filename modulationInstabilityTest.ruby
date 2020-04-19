@@ -1,29 +1,33 @@
 require 'csv'
 local_dir="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-sonic-pi/"
-amp_table=CSV.parse(File.read(local_dir + "/ampiezzeModulation.csv"), headers: false)
+amp_table=CSV.parse(File.read(local_dir + "ampiezzeModulation.csv"), headers: false)
 freq_table=CSV.parse(File.read(local_dir + "freq.csv"), headers: false)
 
-##
-# Raw index is the time-index of the chord.
-# The values is the amplitude of the frequency
-##
-amp_row= 0
-amp_col= 0
-freq_col= 0
+# number of column in amp table
+column_in_amp = amp_table.transpose[0].size - 1;
+# number of frequences - we only have one row.
+freq_array = freq_table[0];
+number_of_freq = freq_array.size - 1;
+puts column_in_amp;
 
-first_chord_amp = amp_table[amp_row];
-first_note_amp=first_chord_amp[amp_col];
-freq_array = freq_table[amp_row];
-# crea accordo
-
+array = [];
+# every column_in_amp
+for c in 0..column_in_amp do
+  # get array with the amplitude data of the first chord
+  amp_table_array = amp_table[c];
+  num_element_in_amp_array= amp_table_array.length;
+  # create a chord array
+  chord = [];
+  for n in 0..num_element_in_amp_array;
+    if amp_table_array[n].to_f > 0.1;
+      freq = freq_table[0][n];
+      amp = amp_table_array[n].to_f
+      chord.push(freq,amp);
+    end
+  end 
+  array.push(chord);
+end
+puts array.inspect;
 
 # crea array of notes to play
-array = []
-for i in 1..freq_array.size do
-    if first_chord_amp[i].to_f > 0.1
-      array.push(freq_array[i].to_f);
-    end
-  end
-  
-  sleep 2;
-  play array.ring[i];
+#play array.ring[i];
