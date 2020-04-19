@@ -1,6 +1,6 @@
 require 'csv'
 local_dir="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-sonic-pi/"
-amp_table=CSV.parse(File.read(local_dir + "ampMod.csv"), headers: false)
+amp_table=CSV.parse(File.read(local_dir + "ampiezzeModulation.csv"), headers: false)
 freq_table=CSV.parse(File.read(local_dir + "freq.csv"), headers: false)
 
 # number of column in amp table
@@ -29,5 +29,10 @@ for c in 0..column_in_amp do
 end
 puts array.inspect;
 
+# for i in 0..array.length
+#   chord = array[i]
+# for y in 0..chord.length
+
+# end 
 # crea array of notes to play
-#play array.ring[i];
+play array.ring[i];
