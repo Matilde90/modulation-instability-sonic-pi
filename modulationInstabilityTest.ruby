@@ -40,7 +40,7 @@ for i in 1..array.length
   freq_to_play.push(freq_p);
   amp_to_play.push(amp_p);
   end 
-puts freq_to_play.inspect;  
+
 #play freq_to_play;
 end
 
