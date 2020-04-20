@@ -1,7 +1,7 @@
 require 'csv'
 local_dir="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-sonic-pi/"
-amp_table=CSV.parse(File.read(local_dir + "ex3.csv"), headers: false)
-freq_table=CSV.parse(File.read(local_dir + "freq3.csv"), headers: false)
+amp_table=CSV.parse(File.read(local_dir + "ex4.csv"), headers: false)
+freq_table=CSV.parse(File.read(local_dir + "freq4.csv"), headers: false)
 
 # number of column in amp table
 column_in_amp = amp_table.transpose[0].size - 1;
