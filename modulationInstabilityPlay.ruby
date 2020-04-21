@@ -11,14 +11,14 @@ number_of_freq = freq_array.size;
 
 array = [];
 # every column_in_amp
-for c in 0..0 do
+for c in 0..column_in_amp do
     # get array with the amplitude data of the first accordo
     amp_table_array = amp_table[c];
     num_element_in_amp_array= amp_table_array.length;
     # create a accordo array
     accordo = [];
     for n in 0..num_element_in_amp_array;
-        # puts amp_table_array[n].to_f.inspect;
+      # puts amp_table_array[n].to_f.inspect;
       if amp_table_array[n].to_f > 0.03;
         freq = freq_table[0][n].to_f;
         amp = amp_table_array[n].to_f;
@@ -32,6 +32,7 @@ for c in 0..0 do
     puts accordo.inspect
   end
   
+  sleep 10;
   puts "starting in 5 seconds"
   
   sleep 5;
@@ -51,11 +52,9 @@ for c in 0..0 do
         end
         puts i;
         for z in 1...freq_to_play.length do
-            puts freq_to_play[z-1]
-            puts amp_to_play[z-1];
-           # play freq_to_play[z-1], amp: amp_to_play[z -1] release: 0.2;
+            play freq_to_play[z-1], amp: amp_to_play[z -1], release: 0.2;
           end
-          sleep 0.3;
+          sleep 0.15;
         end
       end
     end
