@@ -15,10 +15,17 @@ column_in_amp = amp_table.transpose[0].size - 1;
 freq_array = freq_table[0];
 number_of_freq = freq_array.size;
 
-# def repeatedNote(freq, index)
-
-#     return repetition
-#  end
+# gets how many times a note is repeated in subsequent arrays
+def getCount(count, accordo, freq_to_play)
+    if accordo.include?(freq_to_play);
+        count = count + 1; 
+        puts count;
+        getCount(count, accordo[y - 1 + count][0]);
+    else 
+    end
+    sleep 2;
+    return count;
+end
 
 
 array = [];
@@ -49,7 +56,7 @@ sleep 8;
 
 if array.length >0
     puts "arrives here"
-    for i in 1500..array.length
+    for i in 1..array.length
         accordo = array[i- 1];
         freq_to_play=[];
         amp_to_play=[];
@@ -61,8 +68,12 @@ if array.length >0
                 amp_to_play.push(amp_p);
             end
             puts i;
+            count=0
             for z in 1...freq_to_play.length do
-                # if freq_to_play[z-1] != freq_to_play[z-2];
+                
+                # gets count of how many times the note is repeated
+                getCount(count, accordo, freq_to_play);
+                
                 # max amplitude
                 max = 5;
                 mid = filter + (max - filter) / 2;
@@ -98,9 +109,10 @@ if array.length >0
             # puts sustain;
             puts amp_to_play[z-1]
             puts adjustedAmp
-            
-            
-            play freq_to_play[z-1], amp: adjustedAmp, release: 0.2;
+            puts count;
+            # resetting count
+            count = 0
+            # play freq_to_play[z-1], amp: adjustedAmp, release: 0.2;
           end
           sleep 0.35;
         end
