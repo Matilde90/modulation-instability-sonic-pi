@@ -3,15 +3,16 @@ local_dir="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-son
 amp_table=CSV.parse(File.read(local_dir + "ex5.csv"), headers: false)
 freq_table=CSV.parse(File.read(local_dir + "freq5.csv"), headers: false)
 
-# filter value to cutoff frequences.
 filter = 0.009;
 puts "the script will cut off frequences with amplitude lower than #{filter}.";
 
-sleep 1;
-
 ##
 # Function that gets how many times the notes are repeated
-# @params count
+# @param count [integer]
+# @param thisarray
+# @param array
+# @param freq
+# @param y
 ##
 def getCount(count, thisarray, array, freq, y)
   if thisarray.include?(freq);
@@ -37,7 +38,6 @@ for c in 0..column_in_amp do
     # create a accordo array
     accordo = [];
     for n in 0..num_element_in_amp_array;
-      # puts amp_table_array[n].to_f.inspect;
       if amp_table_array[n].to_f > filter;
         freq = freq_table[0][n].to_f;
         amp = amp_table_array[n].to_f;
@@ -50,13 +50,12 @@ for c in 0..column_in_amp do
   end
   
   sleep 13;
-  puts "starting in 8 seconds"
+  puts "needs a break as this is high workload. starting in 8 seconds"
   
   sleep 8;
   
   if array.length >0
-    puts "arrives here"
-    for i in 700..array.length
+    for i in 1441..array.length
       accordo = array[i- 1];
       freq_to_play=[];
       amp_to_play=[];
@@ -76,31 +75,14 @@ for c in 0..column_in_amp do
             # as the note is still playing
             if !array[i-2][0].include?(freq_to_play[z-1])
               
-              # max amplitude
-              max = 5;
-              mid = filter + (max - filter) / 2;
-              low = filter + (mid - filter) / 2;
-              upper_mid = mid + (max - mid) / 2;
-              # map between amplitude and sound to play
-              # needed as sonic pi accepts only values between 0.01 and 1
-              case amp_to_play[z-1]
-              when upper_mid..max
-                adjustedAmp = 1
-              when mid..upper_mid
-                adjustedAmp = 0.7
-              when low..mid
-                adjustedAmp = 0.4
-              when filter..low
-                adjustedAmp = 0.1
-              else
-                adjustedAmp = amp_to_play[z-1]
-              end
-              
-              # scrivere codice che evita che suonino piu di 10 note contemporaneamente.
-              
-              # salvare questo dato in una variablie called repetition
-              # sustain = repetition * 3
-              # creare una nuova variable, called sustain = 0.3 * repetition
+            # amplitude gaussian filtering to adjust amp to play
+            # now 0 < amp < 1;
+            # degree of uniformity of notes played.
+            # The greater sigma is, the more uniform will be the amplitudes
+            sigma=100; 
+            n=1;
+            adjustedAmp=Math.exp(-(1/amp_to_play[z-1])**(2*n)/(sigma**(2*n)));  
+
               sustain_count=count * 0.3;
               puts freq_to_play[z-1]
               puts amp_to_play[z-1]
@@ -108,7 +90,7 @@ for c in 0..column_in_amp do
               puts sustain_count;
               # resetting count
               count = 0
-              play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
+    #          play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
             end
           end
           sleep 0.3;
