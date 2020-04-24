@@ -98,7 +98,8 @@ for c in 0..column_in_amp do
               puts sustain_count;
             # resetting count
               count = 0
-            # play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
+
+    #          play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
             end
           end
           sleep 0.3;
