@@ -44,8 +44,14 @@ for c in 0..column_in_amp do
         accordo.push([freq,amp]);
       end
     end
-    if accordo.length > 0
+    if accordo.length > 10;
+        sorted_array=array.sort {|a, b| b[1] <=> a[1]}
+        cutted_array = sorted_array.first(3)
+        array.push(cutted_array)
+    elsif accordo.length > 0
       array.push(accordo);
+    else
+        puts "nothing to push"
     end
   end
   
@@ -69,8 +75,10 @@ for c in 0..column_in_amp do
         puts i;
         count=0
         for z in 1...freq_to_play.length do
+
             # gets count of how many times the note is repeated
             count = getCount(count, array[i -1][0], array, freq_to_play[z-1], y);
+            
             # sees if the frequence was played before and if so, it ends the loop
             # as the note is still playing
             if !array[i-2][0].include?(freq_to_play[z-1])
@@ -88,9 +96,9 @@ for c in 0..column_in_amp do
               puts amp_to_play[z-1]
               puts adjustedAmp
               puts sustain_count;
-              # resetting count
+            # resetting count
               count = 0
-    #          play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
+            # play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
             end
           end
           sleep 0.3;
