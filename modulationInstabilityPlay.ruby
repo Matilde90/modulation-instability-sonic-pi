@@ -14,20 +14,21 @@ puts "the script will cut off frequences with amplitude lower than #{filter}.";
 # @param freq
 # @param y
 ##
-def getCount(count, thisarray, array, freq, y)
+def getCount(count, thisarray, array, freq, y, i)
   if thisarray.include?(freq);
-    count = count + 1;
-    getCount(count, array[y - 1 + count][0], array, freq, y);
-  else
+        count = count + 1;
+            if array[i - 1 + count];
+            getCount(count, array[i - 1 + count][0], array, freq, y, i);
+            else
+            return count;
+            end
+    else
     return count;
-  end
+    end
 end
 
 # gets number of column in amp table
 column_in_amp = amp_table.transpose[0].size - 1;
-# gets number of frequences - we only have one row.
-freq_array = freq_table[0];
-number_of_freq = freq_array.size;
 
 array = [];
 # every column_in_amp
@@ -45,18 +46,16 @@ for c in 0..column_in_amp do
       end
     end
     if accordo.length > 10;
-        sorted_array=array.sort {|a, b| b[1] <=> a[1]}
-        cutted_array = sorted_array.first(3)
+        sorted_array=accordo.sort {|a, b| b[1] <=> a[1]}
+        cutted_array = sorted_array.first(10)
         array.push(cutted_array)
+       # difference in order may alter the result
     elsif accordo.length > 0
       array.push(accordo);
-    else
-        puts "nothing to push"
     end
-  end
+end
   
-  sleep 13;
-  puts "needs a break as this is high workload. starting in 8 seconds"
+  puts "needs a break as this is high workload. Starting in 8 seconds"
   
   sleep 8;
   
@@ -75,9 +74,9 @@ for c in 0..column_in_amp do
         puts i;
         count=0
         for z in 1...freq_to_play.length do
-
+            # there is an issue with this sustain
             # gets count of how many times the note is repeated
-            count = getCount(count, array[i -1][0], array, freq_to_play[z-1], y);
+            count = getCount(count, array[i-1][0], array, freq_to_play[z-1], y, i);
             
             # sees if the frequence was played before and if so, it ends the loop
             # as the note is still playing
@@ -91,14 +90,10 @@ for c in 0..column_in_amp do
             n=1;
             adjustedAmp=Math.exp(-(1/amp_to_play[z-1])**(2*n)/(sigma**(2*n)));  
 
-              sustain_count=count * 0.3;
-              puts freq_to_play[z-1]
-              puts amp_to_play[z-1]
-              puts adjustedAmp
-              puts sustain_count;
+            sustain_count=count * 0.3;
             # resetting count
-              count = 0
-
+            count = 0
+            puts "sustain: #{sustain_count}, amp: #{adjustedAmp}, freq: #{freq_to_play[z-1]}"
     #          play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
             end
           end
