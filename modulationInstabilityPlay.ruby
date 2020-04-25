@@ -8,11 +8,12 @@ puts "the script will cut off frequences with amplitude lower than #{filter}.";
 
 ##
 # Function that gets how many times the notes are repeated
-# @param count [integer]
+# @param count [integer] to be incremented and keep track of count
 # @param thisarray
 # @param array
 # @param freq
 # @param y
+# @param i
 ##
 def getCount(count, thisarray, array, freq, y, i)
   if thisarray.include?(freq);
@@ -42,16 +43,18 @@ for c in 0..column_in_amp do
       if amp_table_array[n].to_f > filter;
         freq = freq_table[0][n].to_f;
         amp = amp_table_array[n].to_f;
-        accordo.push([freq,amp]);
+        accordo.push([freq,amp]); # [[freq, amp], [freq, amp] ...]
       end
     end
     if accordo.length > 10;
-        sorted_array=accordo.sort {|a, b| b[1] <=> a[1]}
+        sorted_array=accordo.sort {|a, b| b[1] <=> a[1]} # [[79.6, 0.99], [60.8, 0.98 ], [90,0.97],[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
         cutted_array = sorted_array.first(10)
-        array.push(cutted_array)
+        array.push(cutted_array) # [[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
        # difference in order may alter the result
+       # however, the notes will be played at the same time so
+       # change in order won't matter
     elsif accordo.length > 0
-      array.push(accordo);
+      array.push(accordo); # [[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
     end
 end
   
@@ -59,7 +62,7 @@ end
   
   sleep 8;
   
-  if array.length >0
+if array.length >0
     for i in 1441..array.length
       accordo = array[i- 1];
       freq_to_play=[];
@@ -100,5 +103,5 @@ end
           sleep 0.3;
         end
       end
-    end
+end
     
