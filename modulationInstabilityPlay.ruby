@@ -9,25 +9,46 @@ puts "the script will cut off frequences with amplitude lower than #{filter}.";
 ##
 # Function that gets how many times the notes are repeated
 # @param count [integer] to be incremented and keep track of count
-# @param thisarray
-# @param array
-# @param freq
-# @param y
-# @param i
+# @param thisarray [60, 71.8, 88, 67]
+# @param array [[[2,4],[3,4],...],[[1,2],[6,7],...,.]
+# @param freq 88.8
+# @param y freq in accordo index
+# @param i accordo index
 ##
-def getCount(count, thisarray, array, freq, y, i)
-  if thisarray.include?(freq);
-        count = count + 1;
-            if array[i - 1 + count];
-            getCount(count, array[i - 1 + count][0], array, freq, y, i);
-            else
-            return count;
-            end
-    else
-    return count;
-    end
-end
+# def getCount(count, thisarray, accordo, freq, y)
+#   if thisarray.include?(freq);
+#         count = count + 1;
+#             if array[y - 1 + count];
+#             getCount(count, accordo[y - 1 + count][0], accordo, freq, y);
+#             else
+#             return count;
+#             end
+#     else
+#     return count;
+#     end
+# end
+# def getCount (ripetizione, freq, this_chord, master_array, i)
+#     if this_chord.include?(freq);
+#         ripetizione= ripetizione + 1;                
+#         if master_array[i-1+ripetizione];
+#             array_freq= master_array[i-1+ripetizione].collect {|ind| ind[0]}
+#             getCount(ripetizione, freq, array_freq, master_array, i);
+#         else
+#             return ripetizione;
+#         end
+#     end
+#     return ripetizione;
+# end
 
+def prepare_data(amp_to_play, array_to_play, freq_to_play, z, r );
+    sigma=100; 
+    n=1;
+    adjustedAmp=Math.exp(-(1/amp_to_play[z-1])**(2*n)/(sigma**(2*n)));  
+    sustain_count=r * 0.3;
+    array_to_play.push([r, adjustedAmp, freq_to_play]);
+    play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
+    sleep 0.3
+end
 # gets number of column in amp table
 column_in_amp = amp_table.transpose[0].size - 1;
 
@@ -41,9 +62,9 @@ for c in 0..column_in_amp do
     accordo = [];
     for n in 0..num_element_in_amp_array;
       if amp_table_array[n].to_f > filter;
-        freq = freq_table[0][n].to_f;
-        amp = amp_table_array[n].to_f;
-        accordo.push([freq,amp]); # [[freq, amp], [freq, amp] ...]
+            freq = freq_table[0][n].to_f;
+            amp = amp_table_array[n].to_f;
+            accordo.push([freq,amp]); # [[freq, amp], [freq, amp] ...]
       end
     end
     if accordo.length > 10;
@@ -53,55 +74,60 @@ for c in 0..column_in_amp do
        # difference in order may alter the result
        # however, the notes will be played at the same time so
        # change in order won't matter
-    elsif accordo.length > 0
-      array.push(accordo); # [[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
+    else 
+        if accordo.length > 0
+            array.push(accordo);
+        end # accordo: [[79.6, 0.8], [60.8, 0.9 ], [90,0.77]]
     end
 end
   
-  puts "needs a break as this is high workload. Starting in 8 seconds"
+puts "needs a break as this is high workload. Starting in 5 seconds"
   
-  sleep 8;
-  
-if array.length >0
-    for i in 1441..array.length
-      accordo = array[i- 1];
-      freq_to_play=[];
-      amp_to_play=[];
-      if accordo.length > 0;
-        for y in 0..accordo.length
-          freq_p=accordo[y - 1][0];
-          amp_p=accordo[y - 1][1];
-          freq_to_play.push(freq_p);
-          amp_to_play.push(amp_p);
-        end
-        puts i;
-        count=0
-        for z in 1...freq_to_play.length do
-            # there is an issue with this sustain
-            # gets count of how many times the note is repeated
-            count = getCount(count, array[i-1][0], array, freq_to_play[z-1], y, i);
-            
-            # sees if the frequence was played before and if so, it ends the loop
-            # as the note is still playing
-            if !array[i-2][0].include?(freq_to_play[z-1])
-              
-            # amplitude gaussian filtering to adjust amp to play
-            # now 0 < amp < 1;
-            # degree of uniformity of notes played.
-            # The greater sigma is, the more uniform will be the amplitudes
-            sigma=100; 
-            n=1;
-            adjustedAmp=Math.exp(-(1/amp_to_play[z-1])**(2*n)/(sigma**(2*n)));  
+sleep 5;
 
-            sustain_count=count * 0.3;
-            # resetting count
-            count = 0
-            puts "sustain: #{sustain_count}, amp: #{adjustedAmp}, freq: #{freq_to_play[z-1]}"
-    #          play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
+array_to_play=[];
+if array.length >0 # [[[2,4],[3,4],...],[[1,2],[6,7],...,.]
+    for i in 1555..array.length; # ciclo sul numero di accordi
+      accordo = array[i-1];
+        if accordo.length > 0;
+            freq_to_play=accordo.collect {|ind| ind[0]};
+            amp_to_play=accordo.collect {|ind| ind[1]};
+            ripetizione=0
+            for z in 0..freq_to_play.length do
+                # gets count of how many times the note is repeated
+                
+                ripetizione=0
+                for r in 0..array.length;
+                    
+                    # if freq to play is not included, go ahead with playing the music
+                    if (array[i-1+r]) == nil;
+                        prepare_data(amp_to_play, array_to_play, freq_to_play[z], z, r );
+                    else
+                        curent_chord=array[i-1+r].collect{|ind| ind[0]};
+                        if !curent_chord.include?(freq_to_play[z]);
+                            if previous_accordo_freq=array[i-2].collect {|ind| ind[0]};
+                            prepare_data(amp_to_play, array_to_play, freq_to_play[z-1], z, r );
+                        
+                            # sees if the frequence was played before and if so, it ends the loop
+                            # as the note is still playing
+
+                            # amplitude gaussian filtering to adjust amp to play
+                            # now 0 < amp < 1;
+                            # degree of uniformity of notes played.
+                            # The greater sigma is, the more uniform will be the amplitudes
+                            # sigma=100; 
+                            # n=1;
+                            # adjustedAmp=Math.exp(-(1/amp_to_play[z-1])**(2*n)/(sigma**(2*n)));  
+
+                            # sustain_count=r * 0.3;
+                
+                            # array_to_play.push(sustain_count, adjustedAmp, freq_to_play);
+                            #  play freq_to_play[z-1], amp: adjustedAmp, sustain: sustain_count;
+                            end
+                        end
+                    end 
+                end 
             end
-          end
-          sleep 0.3;
         end
-      end
+    end
 end
-    

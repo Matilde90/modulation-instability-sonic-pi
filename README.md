@@ -31,8 +31,9 @@ Data from numerical simualations of the NLSE have been mapped into values corres
 4. Creative parameters choice
 
 ## Authors Contributions
-Auro Michele Perego - physics and numerical simulations
-Matilde Aliffi - ruby & sonic-pi coding
+Auro Michele Perego - physics and numerical simulations.
+Matilde Aliffi - ruby & sonic-pi coding.
+
 The project was concieved by Matilde and Auro as an experimental merging of their professional expertise.
 Auro contributed to numerical simulations of the NLSE and data mapping (points 1. and 2.)
 Matilde contributed data mapping by writing the Ruby code, filtering scheme, and sound continuity algorithm.

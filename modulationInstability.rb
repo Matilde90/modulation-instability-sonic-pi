@@ -11,9 +11,9 @@ master_chords_array = []
 
 column_in_amp.times do |i|
     accordo = []
-    AMP_TABLE[i].length.times do |n|
-      if AMP_TABLE[i][n].to_f > FILTER
-            accordo.push([FREQ_TABLE[0][n].to_f,AMP_TABLE[i][n].to_f]); # [[freq, amp], [freq, amp] ...]
+    AMP_TABLE[i-1].length.times do |n|
+      if AMP_TABLE[i-1][n-1].to_f > FILTER 
+            accordo.push([FREQ_TABLE[0][n-1].to_f,AMP_TABLE[i-1][n-1].to_f]) # [[freq, amp], [freq, amp] ...]
       end
     end
     if accordo.length > 10 # [[79.6, 0.99], [60.8, 0.98 ], [90,0.97],[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
@@ -23,8 +23,17 @@ column_in_amp.times do |i|
     end
 end
 
+master_chords_array.length.times do |y|
+  master_chords_array[y-1].length do |z|
+    r=0
+    r += 1 while (defined?master_chords_array[y-1 +r] and master_chords_array[y-1+r].collect {|ind| ind[0]}.include?(master_chords_array[y-1][z][0])) || !defined?master_chords_array[y]
+    puts r
+    master_chords_array[y][z].push(r);
+  end
+end
+
 
 # unless 
 # play if somenthing and something else
 # no use for loops. preference to times /each
-#or :#
+# or :#
