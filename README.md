@@ -16,7 +16,7 @@ Representation of physical phenomena is usually provided either by mathematical 
 ## What did we do?
 
 1. Simulations
-(Auro) simulated the propagation of continuos (fixed input amplitude) light wave thorugh a single mode fiber using the established focussing nonlinear Schroedinger equation (NLSE) model under the conditions necessary to trigger modulation instability. Data were saved at regular spatial steps (for a total of 2000) along the fiber propagation. At each step amplitudes of the whole optical spectrum were saved. The spectrum was discretized in xx points. The data were saved in a .csv file.
+Simulated the propagation of continuos (fixed input amplitude) light wave thorugh a single mode fiber using the established focussing nonlinear Schroedinger equation (NLSE) model under the conditions necessary to trigger modulation instability. Data were saved at regular spatial steps (for a total of 2000) along the fiber propagation. At each step amplitudes of the whole optical spectrum were saved. The spectrum was discretized in xx points. The data were saved in a .csv file.
 
 2. Data mapping (frequencies)
 Data from numerical simualations of the NLSE have been mapped into values correspoding to amplitudes and frequencies to be played by sonic-pi. We mapped the optical frequency axes into acoustic ones by assigning the central optical frequency to xx(midi code) and considering the maximum and the minimum optical frequencies corresponding to xx and yy (midi code). The acoustic frequencies have been located at equally spaced values within the interval [xx,yy]. There is a clear arbitrariness in such choice, and different mapping choices will of course result in a different sonic translation of the original data. Our choice was motivated by the necessity of fitting the whole optical spectrum into a range fully audible by the human hear. This, in a sense, is analogous to the choice that scientists operate when they select a particular color code for the graphical rappresentation of certain data.
@@ -38,14 +38,8 @@ Auro contributed to numerical simulations of the NLSE and data mapping (points 1
 Matilde contributed data mapping by writing the Ruby code, filtering scheme, and sound continuity algorithm.
 
 
-
-
 ## Contents
 
 - [frequences](freq.csv) file
 - [data](amp.csv) about the amplitude of each frequence in each snapshot
 - The [script](modulationInstabilityPlay.ruby) that generates music
-
-## 
-
-## Authors: 
