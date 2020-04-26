@@ -10,6 +10,7 @@ column_in_amp = AMP_TABLE.transpose[0].size - 1
 master_chords_array = []
 
 column_in_amp.times do |i|
+  puts i
     accordo = []
     AMP_TABLE[i-1].length.times do |n|
       if AMP_TABLE[i-1][n-1].to_f > FILTER 
@@ -23,15 +24,14 @@ column_in_amp.times do |i|
     end
 end
 
+# adding info about how many times a certain note is repeated
 master_chords_array.length.times do |y|
-  master_chords_array[y-1].length do |z|
+  master_chords_array[y-1].length.times do |z|
     r=0
-    r += 1 while (defined?master_chords_array[y-1 +r] and master_chords_array[y-1+r].collect {|ind| ind[0]}.include?(master_chords_array[y-1][z][0])) || !defined?master_chords_array[y]
-    puts r
-    master_chords_array[y][z].push(r);
+    r += 1 while (not master_chords_array[y-1+r].nil? and master_chords_array[y-1+r].collect{|ind| ind[0]}.include?(master_chords_array[y-1][z-1][0])) or master_chords_array[y-1].nil?
+    master_chords_array[y-1][z-1].push(r);
   end
 end
-
 
 # unless 
 # play if somenthing and something else
