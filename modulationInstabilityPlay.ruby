@@ -131,3 +131,5 @@ if array.length >0 # [[[2,4],[3,4],...],[[1,2],[6,7],...,.]
         end
     end
 end
+
+puts array_to_play.inspect
