@@ -2,7 +2,8 @@ require 'csv'
 LOCAL_DIR="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-sonic-pi/"
 AMP_TABLE=CSV.parse(File.read(LOCAL_DIR + "ex5.csv"), headers: false)
 FREQ_TABLE=CSV.parse(File.read(LOCAL_DIR + "freq5.csv"), headers: false)
-FILTER = 0.009
+FILTER = 0.00005
+SLEEP_TIME=0.1
 
 puts "the script will cut off frequences with amplitude lower than #{FILTER}."
 
@@ -67,9 +68,9 @@ master_chords_array.length.times do |s|
 puts s
   master_chords_array[s].length.times do |t|
     if master_chords_array[s][t][4] == "play"
-      play  master_chords_array[s][t][0], amp: master_chords_array[s][t][2], sustain: master_chords_array[s][t][3] * 0.1, attack: 0
+      play  master_chords_array[s][t][0], amp: master_chords_array[s][t][2], sustain: master_chords_array[s][t][3] * SLEEP_TIME, attack: 0
     else
     end
   end
-sleep 0.1
+sleep SLEEP_TIME
 end
