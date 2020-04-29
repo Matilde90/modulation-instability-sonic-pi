@@ -76,16 +76,13 @@ use_synth :hollow
 master_chords_array.length.times do |i|
 puts i
   master_chords_array[i].length.times do |y|
-    if master_chords_array[i][y][4] == "play"
+    if master_chords_array[i][y][4] == "play" and i > (master_chords_array.length - 18) and i < (master_chords_array[i].length - 3)
       ##| p  master_chords_array[i][y][0] + master_chords_array[i][y][2] +  master_chords_array[i][y][3] * SLEEP_TIME
-      if i < 18 and i > 3 
-        play master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: (master_chords_array[i][y][3] * SLEEP_TIME) + 0.2, attack: 0
-      elsif i <= 8 
-        play master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: (master_chords_array[i][y][3] * SLEEP_TIME) + 0.4, attack: 0
-      elsif i >= 18
+        play master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: (master_chords_array[i][y][3] * SLEEP_TIME) + 0.1, attack: 0, decay: 0.1
+    elsif master_chords_array[i][y][4] == "play" and i >= master_chords_array.length - 8
+        play master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: (master_chords_array[i][y][3] * SLEEP_TIME) + 0.2, attack: 0, decay: 0.2
+    elsif master_chords_array[i][y][4] == "play" and i <= master_chords_array.length - 18
         play  master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: master_chords_array[i][y][3] * SLEEP_TIME, attack: 0
-      end
-    else
     end
   end
   if i < 18 && i > 3 
