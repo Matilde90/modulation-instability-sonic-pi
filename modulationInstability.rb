@@ -21,10 +21,10 @@ column_in_amp.times do |i|
     end
   end
   # ensures chords have no more than 20 frequences
-  if accordo.length > MAX_NOTES_IN_CHORDS # accordo [[79.6, 0.99], [60.8, 0.98 ], [90,0.97],[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
+  if accordo.length > MAX_NOTES_IN_CHORDS # accordo's structure: [[79.6, 0.99], [60.8, 0.98 ], [90,0.97],[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
     cutted_master_chords_array = accordo.sort {|a, b| b[1] <=> a[1]}.first(10)
-    master_chords_array.push(cutted_master_chords_array) # cutted array: [[79.6, 0.9], [60.8, 0.8 ], [90,0.77]]
-  else master_chords_array.push(accordo) if accordo.length > 0 # if accordo: [[79.6, 0.8], [60.8, 0.9 ], [90,0.77]]
+    master_chords_array.push(cutted_master_chords_array) 
+  else master_chords_array.push(accordo) if accordo.length > 0 
   end
 end
 
@@ -51,9 +51,8 @@ sleep 15
 # add whether the note needs to be played
 master_chords_array.length.times do |i|
   master_chords_array[i].length.times do |y|
-    # if s is different from 0 and the frequence is contained in the previous array, remove it.
+    # if i is different from 0 and the frequence is contained in the previous array, remove it.
     if (i!=0 and master_chords_array[i-1])
-      #  "s: #{s} t: #{t}, acc: #{master_chords_array[i][y][0]}, master_chords_array: #{master_chords_array[s-1].collect{|ind| ind[0]}}"
       if master_chords_array[i-1].collect{|ind| ind[0]}.include?(master_chords_array[i][y][0])
         master_chords_array[i][y].push("silent")
       else
@@ -71,13 +70,11 @@ sleep 3
 
 # new data array structure
 # [[[freq, amp, scaledAmp, r, play|silent][freq, amp, scaledAmp, r, play|silent]],[[freq, amp, scaledAmp, r, play|silent][freq, amp, scaledAmp, r, play|silent]] ]
-
 use_synth :hollow
 master_chords_array.length.times do |i|
 puts i
   master_chords_array[i].length.times do |y|
     if master_chords_array[i][y][4] == "play" and i > (master_chords_array.length - 18) and i < (master_chords_array[i].length - 3)
-      ##| p  master_chords_array[i][y][0] + master_chords_array[i][y][2] +  master_chords_array[i][y][3] * SLEEP_TIME
         play master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: (master_chords_array[i][y][3] * SLEEP_TIME) + 0.1, attack: 0, decay: 0.1
     elsif master_chords_array[i][y][4] == "play" and i >= master_chords_array.length - 8
         play master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: (master_chords_array[i][y][3] * SLEEP_TIME) + 0.2, attack: 0, decay: 0.2
@@ -85,9 +82,9 @@ puts i
         play  master_chords_array[i][y][0], amp: master_chords_array[i][y][2], sustain: master_chords_array[i][y][3] * SLEEP_TIME, attack: 0
     end
   end
-  if i < 18 && i > 3 
+  if i > (master_chords_array.length - 18) and i < (master_chords_array[i].length - 3) 
     sleep SLEEP_TIME + 0.2 
-  elsif i <= 8 
+  elsif i >= master_chords_array.length - 8
     sleep SLEEP_TIME + 0.4 
   else 
   sleep SLEEP_TIME 
