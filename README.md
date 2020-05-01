@@ -1,6 +1,6 @@
 ## Unstable Sound - sonification of modulation instability
 
-*Unstable Sound* is a music piece composed using [Sonic Pi](https://sonic-pi.net/), an open-source software created by Sam Aaron to create and perform music by writing code. The piece is inspired by a physical phenomenon called *modulation instability* and consists in the sonification of modulation instability of a light wave propagating in an optical fibre. 
+*Unstable Sound* is a music piece composed using open-source software [Sonic Pi](https://sonic-pi.net/). The piece is inspired by a physical phenomenon called *modulation instability* and consists in the sonification of modulation instability of a light wave propagating in an optical fibre. 
 
 ## The sound of modulation instability
 
