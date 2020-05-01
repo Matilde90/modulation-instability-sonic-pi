@@ -1,10 +1,10 @@
-# Sound modulation instability
+# Instable Sound - sonification of modulation instability
 
-This project consists in the sound representation of modulation instability of a light wave propagating in an optical fiber. To produce the sound, we used [Sonic Pi](https://sonic-pi.net/), an open source software created by Sam Aaron to create and perform music by writing code.
+*Instable sound* is a music piece composed using [Sonic Pi](https://sonic-pi.net/), an open source software created by Sam Aaron to create and perform music by writing code. The piece in inspired by a physics phenomenon called *modulation instability* and consists in the sonification of modulation instability of a light wave propagating in an optical fiber. 
 
 ## The sound of modulation instability
 
-NOTE: THE CODE IN THIS REPOSITORY IS STILL WORK IN PROGRESS!
+To listen *Instable sound*, go here: 
 
 ## What is modulation instability?
 
@@ -12,36 +12,36 @@ Modulation instability is an ubiquitous phenomenon occurring in a variety of dif
 
 ## Why representing modulation instability with sound?
 
-Representation of physical phenomena is usually provided either by mathematical formulas or graphical illustrations. The latter method consists in creating a correspondence between numerical data arising from experimental observation (or numerical experiments) and a particular graphical or color code resulting in a picture illustration. In this project we want to represents scientific data produced in a numerical experiment in an alternative way: using sound. We consider this as a first attempt of an approach which we found fascinating both for the musical result and the illustrative potential.
+Representation of physical phenomena is usually provided either by mathematical formulas or graphical illustrations. The latter method consists in creating a correspondence between numerical data arising from experimental observation (or numerical experiments) and a particular graphical or color code resulting in a picture illustration. In this project we want to explore the artistic representation of scientific data produced in a numerical experiment in an alternative way: using sound. We consider this as a first attempt of an approach which we found fascinating.
 
 ## What did we do?
 
 ### Simulations
 
-Simulated the propagation of continuos (fixed input amplitude) light wave thorugh a single mode fiber using the established focussing nonlinear Schroedinger equation (NLSE) model under the conditions necessary to trigger modulation instability. Data were saved at regular spatial steps (for a total of 2000) along the fiber propagation. At each step amplitudes of the whole optical spectrum were saved. The spectrum was discretized in xx points. The data were saved in a .csv file.
+Simulated the propagation of continuos (fixed input amplitude) light wave thorugh a single mode fiber using the established focussing nonlinear Schroedinger equation (NLSE) model under the conditions necessary to trigger modulation instability. Data were saved at regular spatial steps along the fiber propagation. At each step amplitudes of the whole optical spectrum were saved. The data were saved in a .csv file.
 
 ### Data mapping (frequencies)
 
-Data from numerical simualations of the NLSE have been mapped into values correspoding to amplitudes and frequencies to be played by sonic-pi. We mapped the optical frequency axes into acoustic ones by assigning the central optical frequency to xx(midi code) and considering the maximum and the minimum optical frequencies corresponding to xx and yy (midi code). The acoustic frequencies have been located at equally spaced values within the interval [xx,yy]. There is a clear arbitrariness in such choice, and different mapping choices will of course result in a different sonic translation of the original data. Our choice was motivated by the necessity of fitting the whole optical spectrum into a range fully audible by the human hear. This, in a sense, is analogous to the choice that scientists operate when they select a particular color code for the graphical rappresentation of certain data.
+Data from numerical simualations of the NLSE have been mapped into values correspoding to amplitudes and frequencies to be played by sonic-pi. We mapped the optical frequency axes into acoustic ones by assigning the central optical frequency to 75 (midi code) and considering the maximum and the minimum optical frequencies corresponding to 35 and 115 (midi code). There is a clear arbitrariness in such choice, and different mapping choices will of course result in a different sonic translation of the original data. Our choice was motivated by the necessity of fitting the whole optical spectrum into a range fully audible by the human hear. This, in a sense, is analogous to the choice that scientists operate when they select a particular color code for the graphical rappresentation of certain data.
 
 ### Data mapping (amplitudes)
 
-Sonic-pi does not render the subtle differences in aplitudes that the data generates. We mapped amplitudes using a Gausssian function to adapt to the needs of sonic-pi.
-We filtered out the amplitudes below a certain treshold to improve performance of sonic-pi. We also limited the number of notes that could be played simultaneously, to prevent runtime errors of sonic-pi.
-We also wanted to give sound continuity to sound with the same frequency, as this is estetically more pleasing than the continuous repetition of a sound with the same frequency. However, this decision detracts some accuracy from the representation of the physics phenomenon, as the amplitudes of the playing notes, in this version of the script, cannot be modified once they start playing.
+Sonic-pi does not render the subtle differences in aplitudes that the data generates. We scaled amplitudes using a Gausssian function to adapt to the dynamic range of sonic-pi.
+We filtered out the amplitudes below a certain treshold to improve performance of sonic-pi. We also limited the number of notes that could be played simultaneously, to prevent runtime errors.
+We also wanted to give continuity to sounds with the same frequency appearing consecutively in the data, as this is estetically more pleasing. However, this reduces accuracy from the representation of the physical phenomenon, as the amplitudes of the playing notes, in this version of the script, cannot be modified once they start playing.
 From an estetic point of view, we chose to play the music with the "hollow" synth, a pre-defined sonic-pi synth. This adds some imperfection to the sound, but we liked its texture, more muffled and filling than the dry "beep" sound.
 
 ## Authors Contributions
 
-Auro Michele Perego - physics and numerical simulations.
 Matilde Aliffi - ruby & sonic-pi coding.
+Auro Michele Perego - physics and numerical simulations.
 
 The project was concieved by Matilde and Auro as an experimental merging of their professional expertise.
-Auro contributed to numerical simulations of the NLSE and data mapping (points 1. and 2.)
-Matilde contributed data mapping by writing the Ruby code, filtering scheme, and sound continuity algorithm.
+Auro contributed to numerical simulations of the NLSE and data mapping
+Matilde led the project, contributed to data mapping by writing the Ruby code, filtering scheme, and sound continuity algorithm.
 
 ## Contents
 
-- [frequences](freq.csv) file
-- [data](amp.csv) about the amplitude of each frequence in each snapshot
-- The [script](modulationInstabilityPlay.ruby) that generates music
+- [frequences](frequences.csv) file
+- [data](amplitudes.csv) about the amplitude of each frequence in each snapshot
+- The [script](instable_sound.ruby) that generates music

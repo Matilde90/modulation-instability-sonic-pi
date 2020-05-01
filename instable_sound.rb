@@ -1,7 +1,7 @@
 require 'csv'
 LOCAL_DIR="/Users/matildealiffi/Coding/music_sonic_pi/modulation-instability-sonic-pi/"
-AMP_TABLE=CSV.parse(File.read(LOCAL_DIR + "ex5.csv"), headers: false)
-FREQ_TABLE=CSV.parse(File.read(LOCAL_DIR + "freq5.csv"), headers: false)
+AMP_TABLE=CSV.parse(File.read(LOCAL_DIR + "amplitudes.csv"), headers: false)
+FREQ_TABLE=CSV.parse(File.read(LOCAL_DIR + "frequences.csv"), headers: false)
 FILTER = 0.00005
 SLEEP_TIME=0.3
 MAX_NOTES_IN_CHORDS=10
