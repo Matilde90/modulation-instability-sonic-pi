@@ -1,10 +1,10 @@
-# Instable Sound - sonification of modulation instability
+## Unstable Sound - sonification of modulation instability
 
-*Instable sound* is a music piece composed using [Sonic Pi](https://sonic-pi.net/), an open source software created by Sam Aaron to create and perform music by writing code. The piece in inspired by a physics phenomenon called *modulation instability* and consists in the sonification of modulation instability of a light wave propagating in an optical fiber. 
+*Unstable sound* is a music piece composed using [Sonic Pi](https://sonic-pi.net/), an open source software created by Sam Aaron to create and perform music by writing code. The piece is inspired by a physical phenomenon called *modulation instability* and consists in the sonification of modulation instability of a light wave propagating in an optical fiber. 
 
 ## The sound of modulation instability
 
-To listen *Instable sound*, go here: 
+To listen *Unstable sound*, go here: https://soundcloud.com/matilde-aliffi/unstable-sound
 
 ## What is modulation instability?
 
@@ -44,4 +44,4 @@ Matilde led the project, contributed to data mapping by writing the Ruby code, f
 
 - [frequences](frequences.csv) file
 - [data](amplitudes.csv) about the amplitude of each frequence in each snapshot
-- The [script](instable_sound.ruby) that generates music
+- The [script](unstable_sound.ruby) that generates music
